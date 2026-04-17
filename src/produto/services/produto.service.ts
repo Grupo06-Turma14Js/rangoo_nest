@@ -77,4 +77,32 @@ export class ProdutoService {
 
     }
 
+    async findSaudaveis(): Promise<Produto[]> {
+  const produtos = await this.produtoRepository.find({
+    relations: ['categoria'],
+  });
+
+  return produtos
+    .map((produto) => {
+      let score = 0;
+
+      const nome = produto.nome.toLowerCase();
+      const descricao = produto.descricao.toLowerCase();
+
+      if (nome.includes('salada') || descricao.includes('natural')) score += 3;
+      if (nome.includes('grelhado') || descricao.includes('grelhado')) score += 2;
+
+      if (nome.includes('frito') || descricao.includes('frita')) score -= 2;
+      if (nome.includes('refrigerante') || descricao.includes('refrigerante')) score -= 3;
+      if (nome.includes('hambúrguer') || descricao.includes('hambúrguer')) score -= 2;
+
+      return { produto, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .map((item) => item.produto);
+}
+
+    
+
+
 }

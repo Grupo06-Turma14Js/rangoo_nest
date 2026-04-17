@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Usuario } from '../entities/usuario.entity';
 import { Bcrypt } from '../../Auth/Bcrypt/bcrypt';
 
+
 @Injectable()
 export class UsuarioService {
     constructor(
