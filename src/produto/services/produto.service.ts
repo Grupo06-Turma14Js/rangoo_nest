@@ -23,7 +23,7 @@ export class ProdutoService {
   async findById(id: number): Promise<Produto> {
     const produto = await this.produtoRepository.findOne({
       where: { id },
-      //relations: ['categoria'],
+      relations: {categoria: true},
     });
 
     if (!produto) {
