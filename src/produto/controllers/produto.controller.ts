@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
 import { ProdutoService } from "../services/produto.service";
 import { Produto } from "../entities/produto.entity";
+import { JwtAuthGuard } from "../../Auth/guard/jwt-auth.guard";
 
+@UseGuards(JwtAuthGuard)
 @Controller('produtos')
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
@@ -20,10 +22,10 @@ export class ProdutoController {
   }
 
   // Buscar Produto por Nome
-    @Get('/nome/:nome')
+    @Get('/descricao/:descricao')
     @HttpCode(HttpStatus.OK)
-    findByAllNome(@Param('nome') nome: string): Promise<Produto[]>{
-        return this.produtoService.findAllByNome(nome);
+    findByAllDescricao(@Param('descricao') descricao: string): Promise<Produto[]>{
+        return this.produtoService.findAllByDescricao(descricao);
     }
 
   // Criar produto
