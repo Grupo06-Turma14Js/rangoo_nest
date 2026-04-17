@@ -11,21 +11,21 @@ import { UsuarioModule } from './usuario/usuario.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: 'root',
-    database: 'db_rangoo',
-    entities: [Produto, Categoria, Usuario],
-    synchronize: true,
-}), 
-  ProdutoModule,
-  CategoriaModule,
-  AuthModule,
-  UsuarioModule
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'db_rangoo',
+      entities: [Produto, Categoria, Usuario],
+      synchronize: true,
+    }),
+    ProdutoModule,
+    CategoriaModule,
+    AuthModule,
+    UsuarioModule
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

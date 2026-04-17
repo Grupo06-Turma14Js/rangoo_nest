@@ -10,7 +10,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     private _passwordField: string;
 
     constructor(private readonly authService: AuthService) {
-        super(); 
+        super();
         this._usernameField = 'usuario';
         this._passwordField = 'senha';
     }

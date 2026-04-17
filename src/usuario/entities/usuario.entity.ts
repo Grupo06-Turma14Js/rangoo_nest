@@ -4,34 +4,34 @@ import { Produto } from "../../produto/entities/produto.entity"
 
 
 
-@Entity({name: "tb_usuarios"})
+@Entity({ name: "tb_usuarios" })
 export class Usuario {
- 
-    @PrimaryGeneratedColumn()  
+
+    @PrimaryGeneratedColumn()
     id!: number
- 
+
     @IsNotEmpty()
-    @Column({length: 255, nullable: false}) 
+    @Column({ length: 255, nullable: false })
     nome!: string
- 
+
     @IsEmail()
     @IsNotEmpty()
-    @Column({length: 255, nullable: false })
+    @Column({ length: 255, nullable: false })
     usuario!: string
- 
-    @MinLength(8) // 8 caracteres no minimo 
+
+    @MinLength(8)
     @IsNotEmpty()
-    @Column({length: 255, nullable: false }) 
+    @Column({ length: 255, nullable: false })
     senha!: string
- 
-    @Column({length: 5000 }) 
+
+    @Column({ length: 5000 })
     foto!: string
 
     @IsNotEmpty()
-    @Column({length: 255, nullable: false })
+    @Column({ length: 255, nullable: false })
     tipo!: string
- 
+
     @OneToMany(() => Produto, (produto) => produto.usuario)
     produto!: Produto[];
- 
+
 }
