@@ -43,7 +43,7 @@ export class ProdutoController {
     return this.produtoService.delete(id);
   }
 
-  @Get('/saudaveis')
+  @Get('/lista/saudaveis')
   findSaudaveis(): Promise<Produto[]> {
     return this.produtoService.findSaudaveis();
   }
