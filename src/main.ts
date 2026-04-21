@@ -10,12 +10,17 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
-  app.enableCors();
+  app.enableCors({
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Rangoo Nest - API')
     .setDescription('Documentação da API do projeto Rangoo')
     .setVersion('1.0')
+    .addServer('https://rangoo-nest.onrender.com')
     .addBearerAuth()
     .build();
 
