@@ -15,7 +15,7 @@ import { ProdService } from './data/services/prod.service';
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
       //DevService - Testar PC / ProdService - Testar no Render
-      useClass: DevService, 
+      useClass: ProdService, 
       imports: [ConfigModule],
     }),
     ProdutoModule,
