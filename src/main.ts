@@ -20,7 +20,7 @@ async function bootstrap() {
     .setTitle('Rangoo Nest - API')
     .setDescription('Documentação da API do projeto Rangoo')
     .setVersion('1.0')
-    .addServer('https://rangoo-nest.onrender.com')
+    .addServer('https://rangoo-nest-da5w.onrender.com/')
     .addBearerAuth()
     .build();
 
