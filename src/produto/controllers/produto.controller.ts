@@ -1,8 +1,12 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
+import {
+  Body, Controller, Delete, Get, HttpCode, HttpStatus,
+  Param, ParseEnumPipe, ParseFloatPipe, ParseIntPipe,
+  Post, Put, Query, UseGuards,
+} from "@nestjs/common";
 import { ProdutoService } from "../services/produto.service";
-import { Produto } from "../entities/produto.entity";
+import { Produto, Objetivo } from "../entities/produto.entity";
 import { JwtAuthGuard } from "../../Auth/guard/jwt-auth.guard";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiQuery, ApiTags } from "@nestjs/swagger";
 
 @ApiBearerAuth()
 @ApiTags('Produto')
@@ -17,15 +21,37 @@ export class ProdutoController {
     return this.produtoService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.produtoService.findById(id);
+  @Get('/lista/saudaveis')
+  @HttpCode(HttpStatus.OK)
+  findSaudaveis(): Promise<Produto[]> {
+    return this.produtoService.findSaudaveis();
+  }
+
+  @Get('/recomendados')
+  @HttpCode(HttpStatus.OK)
+  @ApiQuery({ name: 'imc', type: Number, description: 'IMC do usuário (ex: 27.3)' })
+  @ApiQuery({
+    name: 'objetivo',
+    enum: Objetivo,
+    description: 'Objetivo nutricional selecionado pelo usuário',
+  })
+  findRecomendados(
+    @Query('imc', ParseFloatPipe) imc: number,
+    @Query('objetivo', new ParseEnumPipe(Objetivo)) objetivo: Objetivo,
+  ): Promise<Produto[]> {
+    return this.produtoService.findRecomendados(imc, objetivo);
   }
 
   @Get('/descricao/:descricao')
   @HttpCode(HttpStatus.OK)
   findByAllDescricao(@Param('descricao') descricao: string): Promise<Produto[]> {
     return this.produtoService.findAllByDescricao(descricao);
+  }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.produtoService.findById(id);
   }
 
   @Post()
@@ -45,10 +71,4 @@ export class ProdutoController {
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.produtoService.delete(id);
   }
-
-  @Get('/lista/saudaveis')
-  findSaudaveis(): Promise<Produto[]> {
-    return this.produtoService.findSaudaveis();
-  }
-
 }
