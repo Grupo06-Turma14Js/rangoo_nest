@@ -1,4 +1,4 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Categoria } from "../../categoria/entities/categoria.entity";
 import { Usuario } from "../../usuario/entities/usuario.entity";
@@ -57,7 +57,6 @@ export class Produto {
     default: null,
   })
 
-
   @ApiProperty({ enum: Objetivo, required: false, nullable: true })
   objetivo!: Objetivo | null;
 
@@ -71,6 +70,8 @@ export class Produto {
   @ApiProperty({ type: () => Usuario })
   usuario!: Usuario;
 
+  @IsOptional()
+  @IsString()
   @ApiProperty()
   @Column({ type: 'text', nullable: true })
   foto!: string;
