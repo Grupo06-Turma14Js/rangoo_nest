@@ -57,6 +57,7 @@ export class ProdutoController {
   @Post()
   @HttpCode(HttpStatus.OK)
   create(@Body() produto: Produto) {
+    console.log('Produto recebido:', produto);
     return this.produtoService.create(produto);
   }
 
