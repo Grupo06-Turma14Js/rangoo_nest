@@ -6,10 +6,10 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export enum Objetivo {
   EMAGRECIMENTO = "emagrecimento",
-  GANHO_MASSA   = "ganho-massa",
-  DIABETICO     = "diabetico",
-  SEM_LACTOSE   = "sem-lactose",
-  SEM_GLUTEN    = "sem-gluten",
+  GANHO_MASSA = "ganho-massa",
+  DIABETICO = "diabetico",
+  SEM_LACTOSE = "sem-lactose",
+  SEM_GLUTEN = "sem-gluten",
 }
 
 @Entity({ name: "tb_produtos" })
@@ -39,12 +39,12 @@ export class Produto {
   @ApiProperty()
   ativo!: boolean;
 
-    @IsNotEmpty()
+  @IsNotEmpty()
   @Column({ type: "decimal", precision: 5, scale: 2, nullable: true, default: null })
   @ApiProperty({ required: false, nullable: true })
   imcMin!: number | null;
 
-    @IsNotEmpty()
+  @IsNotEmpty()
   @Column({ type: "decimal", precision: 5, scale: 2, nullable: true, default: null })
   @ApiProperty({ required: false, nullable: true })
   imcMax!: number | null;
@@ -57,7 +57,7 @@ export class Produto {
     default: null,
   })
 
-  
+
   @ApiProperty({ enum: Objetivo, required: false, nullable: true })
   objetivo!: Objetivo | null;
 
@@ -70,4 +70,8 @@ export class Produto {
   })
   @ApiProperty({ type: () => Usuario })
   usuario!: Usuario;
+
+  @ApiProperty()
+  @Column({ type: 'text', nullable: true })
+  foto!: string;
 }

@@ -37,6 +37,7 @@ export class Usuario {
     @Column({ length: 255, nullable: false })
     tipo!: string
 
+    @ApiProperty()
     @OneToMany(() => Produto, (produto) => produto.usuario)
     produto!: Produto[];
 
