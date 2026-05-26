@@ -72,4 +72,9 @@ export class ProdutoController {
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.produtoService.delete(id);
   }
+  @Post('/lote')
+  @HttpCode(HttpStatus.OK)
+  createLote(@Body() produtos: Produto[]): Promise<Produto[]> {
+    return Promise.all(produtos.map(p => this.produtoService.create(p)));
+  }
 }
