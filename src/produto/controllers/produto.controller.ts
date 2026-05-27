@@ -1,43 +1,15 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseEnumPipe,
-  ParseFloatPipe,
-  ParseIntPipe,
-  Post,
-  Put,
-  Query,
-  UseGuards,
-} from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseEnumPipe, ParseFloatPipe, ParseIntPipe, Post, Put, Query, UseGuards, } from "@nestjs/common";
+import { ProdutoService } from "../services/produto.service"; 
+import { Produto, Objetivo } from "../entities/produto.entity"; 
+import { JwtAuthGuard } from "../../Auth/guard/jwt-auth.guard"; 
+import { ApiBearerAuth, ApiQuery, ApiTags } from "@nestjs/swagger";
 
-import { ProdutoService } from "../services/produto.service";
-import { Produto, Objetivo } from "../entities/produto.entity";
-
-import { JwtAuthGuard } from "../../Auth/guard/jwt-auth.guard";
-
-import {
-  ApiBearerAuth,
-  ApiQuery,
-  ApiTags
-} from "@nestjs/swagger";
-
+@ApiBearerAuth()
 @ApiTags('Produto')
+@UseGuards(JwtAuthGuard)
 @Controller('produtos')
-
 export class ProdutoController {
-
-  constructor(
-    private readonly produtoService: ProdutoService
-  ) {}
-
-  // ─────────────────────────────
-  // ROTAS PÚBLICAS
-  // ─────────────────────────────
+  constructor(private readonly produtoService: ProdutoService) { }
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -53,99 +25,52 @@ export class ProdutoController {
 
   @Get('/recomendados')
   @HttpCode(HttpStatus.OK)
-
-  @ApiQuery({
-    name: 'imc',
-    type: Number,
-    description: 'IMC do usuário'
-  })
-
+  @ApiQuery({ name: 'imc', type: Number, description: 'IMC do usuário (ex: 27.3)' })
   @ApiQuery({
     name: 'objetivo',
     enum: Objetivo,
-    description: 'Objetivo nutricional'
+    description: 'Objetivo nutricional selecionado pelo usuário',
   })
-
   findRecomendados(
     @Query('imc', ParseFloatPipe) imc: number,
-    @Query('objetivo', new ParseEnumPipe(Objetivo))
-    objetivo: Objetivo,
+    @Query('objetivo', new ParseEnumPipe(Objetivo)) objetivo: Objetivo,
   ): Promise<Produto[]> {
-
-    return this.produtoService.findRecomendados(
-      imc,
-      objetivo,
-    );
+    return this.produtoService.findRecomendados(imc, objetivo);
   }
 
   @Get('/descricao/:descricao')
   @HttpCode(HttpStatus.OK)
-  findByAllDescricao(
-    @Param('descricao') descricao: string
-  ): Promise<Produto[]> {
-
-    return this.produtoService.findAllByDescricao(
-      descricao
-    );
+  findByAllDescricao(@Param('descricao') descricao: string): Promise<Produto[]> {
+    return this.produtoService.findAllByDescricao(descricao);
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  findOne(
-    @Param('id', ParseIntPipe) id: number
-  ) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.produtoService.findById(id);
   }
 
-  // ─────────────────────────────
-  // ROTAS PROTEGIDAS
-  // ─────────────────────────────
-
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Post()
-  @HttpCode(HttpStatus.CREATED)
-  create(
-    @Body() produto: Produto
-  ) {
-
+  @HttpCode(HttpStatus.OK)
+  create(@Body() produto: Produto) {
     console.log('Produto recebido:', produto);
-
     return this.produtoService.create(produto);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Put()
   @HttpCode(HttpStatus.OK)
-  update(
-    @Body() produto: Produto
-  ) {
-
+  update(@Body() produto: Produto) {
     return this.produtoService.update(produto);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  delete(
-    @Param('id', ParseIntPipe) id: number
-  ) {
-
+  @HttpCode(HttpStatus.OK)
+  delete(@Param('id', ParseIntPipe) id: number) {
     return this.produtoService.delete(id);
   }
-
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Post('/lote')
-  @HttpCode(HttpStatus.CREATED)
-  createLote(
-    @Body() produtos: Produto[]
-  ): Promise<Produto[]> {
-
-    return Promise.all(
-      produtos.map(p => this.produtoService.create(p))
-    );
+  @HttpCode(HttpStatus.OK)
+  createLote(@Body() produtos: Produto[]): Promise<Produto[]> {
+    return Promise.all(produtos.map(p => this.produtoService.create(p)));
   }
 }
