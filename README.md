@@ -3,7 +3,7 @@
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white) ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![Insomnia](https://img.shields.io/badge/Insomnia-black?style=for-the-badge&logo=insomnia&logoColor=5849BE) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white) ![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white) ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 
 ### 📊 Modelo de Negócio
-O **Rangoo** é um modelo de **E-commerce B2C** focado no nicho de alimentação saudável. A plataforma permite a conexão direta entre o estoque de produtos nutritivos e o consumidor final, facilitando a escolha de refeições baseadas em dietas específicas.
+O **Rangoo** é uma API focada no nicho de alimentação saudável. A plataforma permite a conexão direta entre o estoque de produtos nutritivos e o consumidor final, facilitando a escolha de refeições baseadas em dietas específicas.
 
 ### 📝 Descrição Geral
 API REST desenvolvida para gerenciar um sistema de delivery saudável. A aplicação permite o controle de usuários, a organização de cardápios por categorias e a gestão de produtos, garantindo que o fluxo de dados seja seguro, documentado e pronto para escala em nuvem.
