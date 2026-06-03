@@ -1,11 +1,7 @@
-import {
-  Body, Controller, Delete, Get, HttpCode, HttpStatus,
-  Param, ParseEnumPipe, ParseFloatPipe, ParseIntPipe,
-  Post, Put, Query, UseGuards,
-} from "@nestjs/common";
-import { ProdutoService } from "../services/produto.service";
-import { Produto, Objetivo } from "../entities/produto.entity";
-import { JwtAuthGuard } from "../../Auth/guard/jwt-auth.guard";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseEnumPipe, ParseFloatPipe, ParseIntPipe, Post, Put, Query, UseGuards, } from "@nestjs/common";
+import { ProdutoService } from "../services/produto.service"; 
+import { Produto, Objetivo } from "../entities/produto.entity"; 
+import { JwtAuthGuard } from "../../Auth/guard/jwt-auth.guard"; 
 import { ApiBearerAuth, ApiQuery, ApiTags } from "@nestjs/swagger";
 
 @ApiTags('Produto')

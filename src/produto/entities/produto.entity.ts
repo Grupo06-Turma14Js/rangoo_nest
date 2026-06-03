@@ -7,6 +7,7 @@ import { ApiProperty } from "@nestjs/swagger";
 export enum Objetivo {
   EMAGRECIMENTO = "emagrecimento",
   GANHO_MASSA = "ganho-massa",
+  VEGETARIANO   = "vegetariano",
   DIABETICO = "diabetico",
   SEM_LACTOSE = "sem-lactose",
   SEM_GLUTEN = "sem-gluten",
