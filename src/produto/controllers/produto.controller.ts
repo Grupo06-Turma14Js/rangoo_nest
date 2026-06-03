@@ -4,9 +4,7 @@ import { Produto, Objetivo } from "../entities/produto.entity";
 import { JwtAuthGuard } from "../../Auth/guard/jwt-auth.guard"; 
 import { ApiBearerAuth, ApiQuery, ApiTags } from "@nestjs/swagger";
 
-@ApiBearerAuth()
 @ApiTags('Produto')
-@UseGuards(JwtAuthGuard)
 @Controller('produtos')
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) { }
@@ -50,6 +48,9 @@ export class ProdutoController {
     return this.produtoService.findById(id);
   }
 
+  //Privados
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(HttpStatus.OK)
   create(@Body() produto: Produto) {
@@ -57,20 +58,34 @@ export class ProdutoController {
     return this.produtoService.create(produto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Put()
   @HttpCode(HttpStatus.OK)
   update(@Body() produto: Produto) {
     return this.produtoService.update(produto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.produtoService.delete(id);
   }
-  @Post('/lote')
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Post("/lote")
   @HttpCode(HttpStatus.OK)
-  createLote(@Body() produtos: Produto[]): Promise<Produto[]> {
-    return Promise.all(produtos.map(p => this.produtoService.create(p)));
+  createLote(
+    @Body()
+    produtos: Produto[]
+  ): Promise<Produto[]> {
+    return Promise.all(
+      produtos.map((p) =>
+        this.produtoService.create(p)
+      )
+    );
   }
 }
