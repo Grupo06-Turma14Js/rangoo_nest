@@ -5,8 +5,6 @@ import { JwtAuthGuard } from "../../Auth/guard/jwt-auth.guard";
 import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
 
 @ApiTags('Categoria')
-@ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
 @Controller('categorias')
 export class CategoriaController {
   constructor(private readonly categoriaService: CategoriaService) { }
@@ -23,18 +21,26 @@ export class CategoriaController {
     return this.categoriaService.findById(id);
   }
 
+
+  //Privados
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(HttpStatus.OK)
   create(@Body() categoria: Categoria): Promise<Categoria> {
     return this.categoriaService.create(categoria);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Put()
   @HttpCode(HttpStatus.OK)
   update(@Body() categoria: Categoria): Promise<Categoria> {
     return this.categoriaService.update(categoria);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   delete(@Param('id', ParseIntPipe) id: number) {
